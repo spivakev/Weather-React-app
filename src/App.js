@@ -25,7 +25,7 @@ class App extends React.Component {
       const data = await api_url.json();
       console.log(data)
 
-      if (data.cod !== '200') {
+      if (data.cod !== 200) {
         let error_text;
 
         if (data.cod === '404') error_text = "Город не найден";
@@ -49,7 +49,7 @@ class App extends React.Component {
         this.setState({
           temp: data.main.temp,
           city: data.name,
-          country: data.sys.contry,
+          country: data.sys.country,
           pressure: data.main.pressure,
           sunset: sunset_time,
           error: undefined
@@ -69,17 +69,27 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <Info />
-        <Form weatherMethod={this.gettingWeather} />
-        <Weather
-          temp={this.state.temp}
-          city={this.state.city}
-          country={this.state.country}
-          pressure={this.state.pressure}
-          sunset={this.state.sunset}
-          error={this.state.error}
-        />
+      <div className="wrapper">
+        <div className="main">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-5 info">
+                <Info />
+              </div>
+              <div className="col-sm-7 form">
+                <Form weatherMethod={this.gettingWeather} />
+                <Weather
+                  temp={this.state.temp}
+                  city={this.state.city}
+                  country={this.state.country}
+                  pressure={this.state.pressure}
+                  sunset={this.state.sunset}
+                  error={this.state.error}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
