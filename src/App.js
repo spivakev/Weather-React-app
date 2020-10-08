@@ -25,10 +25,10 @@ class App extends React.Component {
       const data = await api_url.json();
       console.log(data)
 
-      if (data.cod !== 200) {
+      if (data.cod !== '200') {
         let error_text;
 
-        if (data.cod === 404) error_text = "Город не найден";
+        if (data.cod === '404') error_text = "Город не найден";
         else error_text = data.message;
 
         this.setState({
