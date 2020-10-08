@@ -26,15 +26,16 @@ class App extends React.Component {
       console.log(data)
 
       if (data.cod !== 200) {
+        let error_text = data.message;
+
         this.setState({
           temp: undefined,
           city: undefined,
           country: undefined,
           pressure: undefined,
           sunset: undefined,
-          error: "Город не найден"
+          error: error_text
         });
-
       } else {
         let sunset = data.sys.sunset;
         let date = new Date();
