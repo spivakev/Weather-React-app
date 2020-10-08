@@ -23,20 +23,33 @@ class App extends React.Component {
     if (city) {
       const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`); //полностью читаем url и получаем из него данные
       const data = await api_url.json();
+      console.log(data)
 
-      let sunset = data.sys.sunset;
-      let date = new Date();
-      date.setTime(sunset);
-      let sunset_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+      if (data.cod !== 200) {
+        this.setState({
+          temp: undefined,
+          city: undefined,
+          country: undefined,
+          pressure: undefined,
+          sunset: undefined,
+          error: "Город не найден"
+        });
 
-      this.setState({
-        temp: data.main.temp,
-        city: data.name,
-        country: data.sys.contry,
-        pressure: data.main.pressure,
-        sunset: sunset_time,
-        error: undefined
-      });
+      } else {
+        let sunset = data.sys.sunset;
+        let date = new Date();
+        date.setTime(sunset);
+        let sunset_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+        this.setState({
+          temp: data.main.temp,
+          city: data.name,
+          country: data.sys.contry,
+          pressure: data.main.pressure,
+          sunset: sunset_time,
+          error: undefined
+        });
+      }
     } else {
       this.setState({
         temp: undefined,
