@@ -5,9 +5,6 @@ import Weather from './components/Weather';
 
 const API_KEY = 'b3f605745d940130f539cb776defe2bb';
 
-//'api.openweathermap.org / data / 2.5 / weather ? q = London & appid={ API key }'
-//api.openweathermap.org/data/2.5/weather?q=Kiev,ua&appid=ВАШ_КЛЮЧ&units=metric
-
 class App extends React.Component {
 
   state = {
@@ -26,8 +23,6 @@ class App extends React.Component {
     if (city) {
       const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`); //полностью читаем url и получаем из него данные
       const data = await api_url.json();
-      console.log(data)
-
 
       let sunset = data.sys.sunset;
       let date = new Date();
@@ -40,8 +35,17 @@ class App extends React.Component {
         country: data.sys.contry,
         pressure: data.main.pressure,
         sunset: sunset_time,
-        error: ""
-      })
+        error: undefined
+      });
+    } else {
+      this.setState({
+        temp: undefined,
+        city: undefined,
+        country: undefined,
+        pressure: undefined,
+        sunset: undefined,
+        error: "Введите название города"
+      });
     }
   }
 
@@ -56,6 +60,7 @@ class App extends React.Component {
           country={this.state.country}
           pressure={this.state.pressure}
           sunset={this.state.sunset}
+          error={this.state.error}
         />
       </div>
     );
