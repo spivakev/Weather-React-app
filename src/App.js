@@ -26,7 +26,10 @@ class App extends React.Component {
       console.log(data)
 
       if (data.cod !== 200) {
-        let error_text = data.message;
+        let error_text;
+
+        if (data.cod === 404) error_text = "Город не найден";
+        else error_text = data.message;
 
         this.setState({
           temp: undefined,
@@ -35,8 +38,9 @@ class App extends React.Component {
           pressure: undefined,
           sunset: undefined,
           error: error_text
-        });
-      } else {
+        })
+      }
+      else {
         let sunset = data.sys.sunset;
         let date = new Date();
         date.setTime(sunset);
